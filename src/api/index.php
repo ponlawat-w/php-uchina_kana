@@ -7,12 +7,12 @@ if (!isset($_GET['search'])) {
 
 header('Content-Type: application/json');
 
-$search = strtolower($_GET['search']);
-
 if (!$search) {
     echo json_encode([]);
     exit;
 }
+
+$search = strtolower($_GET['search']);
 
 $results = [];
 
