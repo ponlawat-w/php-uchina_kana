@@ -5,7 +5,14 @@ if (!isset($_GET['search'])) {
     exit;
 }
 
+header('Content-Type: application/json');
+
 $search = strtolower($_GET['search']);
+
+if (!$search) {
+    echo json_encode([]);
+    exit;
+}
 
 $results = [];
 
@@ -37,5 +44,4 @@ foreach ($results as $result) {
     unset($result->id);
 }
 
-header('Content-Type: application/json');
 echo json_encode($results);
