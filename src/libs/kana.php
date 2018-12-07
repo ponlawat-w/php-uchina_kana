@@ -1,6 +1,7 @@
 <?php
 
 const VOWELS = ['a' => 0, 'i' => 1, 'u' => 2, 'e' => 3, 'o' => 4, '' => 5];
+const VOWEL_VALUES = ['a', 'i', 'u', 'e', 'o', ''];
 
 const KANAS = [
     ''   => ['あ',  'い',    'う',   'え',  'お', null],
@@ -223,4 +224,30 @@ function kana_from_romaji($romaji) {
     }
 
     return $kana;
+}
+
+/**
+ * @param string $kana
+ * @return string
+ */
+function romaji_from_kana($kana) {
+    foreach (KANAS as $alphabet => $kanaRow) {
+        foreach ($kanaRow as $vowelValue => $kanaValue) {
+            if ($kanaValue == $kana) {
+                $vowel = VOWEL_VALUES[$vowelValue];
+                return "{$alphabet}{$vowel}";
+            }
+        }
+    }
+    return '';
+}
+
+/**
+ * @param string $str
+ * @return string
+ */
+function romaji_from_kanas($str) {
+    return implode('',
+        array_map(function($kana) { return romaji_from_kana($kana); },
+            kana_explode($str)));
 }

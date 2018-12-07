@@ -67,4 +67,23 @@ class KanaTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('うっちゃんぎゆん', kana_from_romaji('?uccaNgi=ju]N'));
         $this->assertEquals('ゆちあじまー', kana_from_romaji('juCi?azimaa'));
     }
+
+    public function testFromKana() {
+        $this->assertEquals('mu', romaji_from_kana('む'));
+        $this->assertEquals('sja', romaji_from_kana('しゃ'));
+        $this->assertEquals('n', romaji_from_kana('ん'));
+        $this->assertEquals('q', romaji_from_kana('っ'));
+        $this->assertEquals('zi', romaji_from_kana('じ'));
+        $this->assertEquals('gwa', romaji_from_kana('ぐゎ'));
+    }
+
+    public function testFromKanas() {
+        $this->assertEquals('nahwa', romaji_from_kanas('なふぁ'));
+        $this->assertEquals('umuin', romaji_from_kanas('うむいん'));
+        $this->assertEquals('tuqtin', romaji_from_kanas('とぅってぃん'));
+        $this->assertEquals('zintojoo', romaji_from_kanas('じんとよー'));
+        $this->assertEquals('uuzi', romaji_from_kanas('うーじ'));
+        $this->assertEquals('tinsagunuhana', romaji_from_kanas('てぃんさぐぬはな'));
+        $this->assertEquals('tinsjaaguu', romaji_from_kanas('てぃんしゃーぐー'));
+    }
 }
