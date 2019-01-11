@@ -25,19 +25,19 @@ if ($word) {
 $results = array_merge($results, db_get_records_sql(
     'SELECT words.*, synonyms.synonym AS reason FROM words JOIN synonyms on words.id = synonyms.word
           WHERE synonym LIKE ?'
-    , ["$search%"]));
+    , ["{$search}%"]));
 
 $ids = array_map(function($r) { return $r->id; }, $results);
 if (count($ids)) {
     $results = array_merge($results, db_get_records_sql(
         'SELECT words.*, synonyms.synonym AS reason FROM words JOIN synonyms on words.id = synonyms.word
-          WHERE synonym LIKE ? AND id NOT IN ' . db_create_in_query($ids)
-        , array_merge(["%$search%"], $ids)));
+          WHERE synonym LIKE ? OR meaning LIKE ? AND id NOT IN ' . db_create_in_query($ids)
+        , array_merge(["%{$search}%", "%{$search}%"], $ids)));
 } else {
     $results = array_merge($results, db_get_records_sql(
         'SELECT words.*, synonyms.synonym AS reason FROM words JOIN synonyms on words.id = synonyms.word
-          WHERE synonym LIKE ?'
-        , ["%$search%"]));
+          WHERE synonym LIKE ? OR meaning LIKE ?'
+        , ["%{$search}%", "%{$search}%"]));
 }
 
 foreach ($results as $result) {
